@@ -1,0 +1,472 @@
+/* ================================================================
+   PORTAL DE TELEMEDICINA SUS - JUNDIAÍ
+   Arquivo de estilos (CSS)
+   ----------------------------------------------------------------
+   Este CSS foi escrito seguindo a abordagem "Mobile First":
+   as regras "de fora" (sem media query) valem para celulares,
+   e usamos @media (min-width: ...) para ajustar telas maiores.
+   ================================================================ */
+
+/* ----------------------------------------------------------------
+   1. VARIÁVEIS DE COR (CSS Custom Properties)
+   Definimos aqui a paleta de cores do SUS e da Prefeitura de Jundiaí,
+   para reaproveitar em todo o site e facilitar futuras alterações.
+------------------------------------------------------------------- */
+ :root {
+  --azul-escuro: #003366;   /* Azul institucional forte, usado em títulos e cabeçalho */
+  --azul-medio: #0057a3;    /* Azul intermediário, usado em botões */
+  --azul-claro: #e6f2fb;    /* Azul bem claro, usado em fundos suaves */
+  --branco: #ffffff;
+  --cinza-texto: #2b2b2b;   /* Quase preto, para bom contraste com o fundo branco */
+  --verde-sucesso: #1e7e34; /* Verde para mensagens de sucesso */
+  --amarelo-alerta: #ffcc00;/* Cor do botão de destaque (chamativo) */
+
+  /* Tamanho de fonte "controlável" pelo JavaScript.
+     Começamos em 20px, dentro da faixa pedida (18px a 20px). */
+  --fonte-tamanho-base: 20px;
+}
+
+/* ----------------------------------------------------------------
+   2. RESET BÁSICO E CONFIGURAÇÕES GERAIS
+------------------------------------------------------------------- */
+* {
+  box-sizing: border-box; /* Facilita o cálculo de tamanhos com padding/border */
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  /* Usamos font-size no <html> para que "rem" funcione de forma previsível,
+     mas a variável controlada pelo JS é aplicada no body (ver JS). */
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Roboto', Arial, Helvetica, sans-serif; /* Fonte sem serifa, conforme pedido */
+  font-size: var(--fonte-tamanho-base);
+  line-height: 1.6; /* Espaçamento generoso entre linhas, mais fácil de ler */
+  color: var(--cinza-texto);
+  background-color: var(--branco);
+  /* Transição suave quando o tamanho da fonte ou o contraste mudam */
+  transition: font-size 0.2s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+h1, h2, h3 {
+  color: var(--azul-escuro);
+  line-height: 1.3;
+}
+
+h2 {
+  font-size: 1.5em;
+  margin-bottom: 0.6em;
+}
+
+h3 {
+  font-size: 1.15em;
+  margin-bottom: 0.4em;
+}
+
+p {
+  margin-bottom: 1em;
+}
+
+/* Foco visível em QUALQUER elemento navegável por teclado (Tab).
+   Essencial para acessibilidade (WCAG 2.4.7 - Foco Visível). */
+a:focus,
+button:focus,
+input:focus,
+select:focus {
+  outline: 4px solid var(--amarelo-alerta);
+  outline-offset: 2px;
+}
+
+/* ----------------------------------------------------------------
+   3. CABEÇALHO
+------------------------------------------------------------------- */
+.cabecalho {
+  background-color: var(--azul-escuro);
+  color: var(--branco);
+  padding: 1rem;
+}
+
+.cabecalho h1 {
+  color: var(--branco);
+  font-size: 1.4em;
+  text-align: center;
+}
+
+.cabecalho-subtitulo {
+  display: block;
+  font-size: 0.7em;
+  font-weight: 400;
+}
+
+/* Barra de acessibilidade: os botões ficam empilhados no celular
+   (coluna) e lado a lado em telas maiores (ver media query abaixo). */
+.barra-acessibilidade {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+.btn-acessibilidade {
+  /* Alvo de toque mínimo de 44x44px, conforme WCAG 2.5.5 */
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0.6rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  font-family: inherit;
+  color: var(--azul-escuro);
+  background-color: var(--branco);
+  border: 2px solid var(--branco);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-acessibilidade:hover {
+  background-color: var(--amarelo-alerta);
+  border-color: var(--amarelo-alerta);
+  color: var(--azul-escuro);
+}
+
+/* ----------------------------------------------------------------
+   4. MENU DE NAVEGAÇÃO (ABAS)
+------------------------------------------------------------------- */
+.menu-navegacao {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--azul-claro);
+}
+
+.botao-aba {
+  min-height: 44px;
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: inherit;
+  background-color: var(--azul-claro);
+  color: var(--azul-escuro);
+  border: none;
+  border-bottom: 2px solid var(--branco);
+  cursor: pointer;
+  text-align: center;
+}
+
+.botao-aba:hover {
+  background-color: #cfe4f5;
+}
+
+/* Classe aplicada via JavaScript na aba do menu que está ativa no momento */
+.botao-aba.aba-selecionada {
+  background-color: var(--azul-medio);
+  color: var(--branco);
+}
+
+/* ----------------------------------------------------------------
+   5. CONTEÚDO PRINCIPAL E ABAS (SEÇÕES)
+------------------------------------------------------------------- */
+.conteudo-principal {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem 1rem;
+}
+
+/* Por padrão, todas as seções .aba ficam escondidas... */
+.aba {
+  display: none;
+}
+
+/* ...e o JavaScript adiciona a classe .aba-ativa na seção que deve aparecer. */
+.aba.aba-ativa {
+  display: block;
+  /* Pequena animação de entrada, suave e não-distrativa */
+  animation: aparecer 0.3s ease-in;
+}
+
+@keyframes aparecer {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.texto-introducao {
+  font-size: 1.05em;
+  margin-bottom: 1.5em;
+}
+
+/* ----------------------------------------------------------------
+   6. ABA "COMO FUNCIONA" - JORNADA EM PASSOS
+------------------------------------------------------------------- */
+.lista-passos {
+  list-style: none;
+}
+
+.passo {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  background-color: var(--azul-claro);
+  border-left: 6px solid var(--azul-medio);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.passo-numero {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: var(--azul-escuro);
+  color: var(--branco);
+  font-size: 1.3em;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.passo-texto p {
+  margin-bottom: 0;
+}
+
+/* ----------------------------------------------------------------
+   7. ABA "MARCAR CONSULTA" - FORMULÁRIO
+------------------------------------------------------------------- */
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.campo-formulario {
+  display: flex;
+  flex-direction: column;
+}
+
+.campo-formulario label {
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.campo-formulario input,
+.campo-formulario select {
+  min-height: 44px;
+  font-size: 1rem;
+  font-family: inherit;
+  padding: 0.6rem;
+  border: 2px solid var(--azul-medio);
+  border-radius: 8px;
+  background-color: var(--branco);
+  color: var(--cinza-texto);
+}
+
+.campo-formulario input:focus,
+.campo-formulario select:focus {
+  border-color: var(--azul-escuro);
+}
+
+/* Botão de enviar bem chamativo, como pedido no briefing */
+.botao-enviar {
+  min-height: 56px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  font-family: inherit;
+  color: var(--azul-escuro);
+  background-color: var(--amarelo-alerta);
+  border: 3px solid var(--azul-escuro);
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+
+.botao-enviar:hover {
+  background-color: var(--azul-escuro);
+  color: var(--branco);
+}
+
+.mensagem-sucesso {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background-color: #e4f5e8;
+  border: 2px solid var(--verde-sucesso);
+  color: #14401f;
+  border-radius: 8px;
+  font-weight: 700;
+}
+
+/* ----------------------------------------------------------------
+   8. ABA "DÚVIDAS" - ACCORDION (SANFONA)
+------------------------------------------------------------------- */
+.accordion-item {
+  border: 2px solid var(--azul-claro);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+.accordion-pergunta {
+  width: 100%;
+  min-height: 44px;
+  text-align: left;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: inherit;
+  color: var(--azul-escuro);
+  background-color: var(--azul-claro);
+  border: none;
+  cursor: pointer;
+  position: relative;
+  padding-right: 2.5rem; /* espaço para o ícone de + / - */
+}
+
+/* Ícone "+" / "-" criado só com CSS, para não depender de imagens */
+.accordion-pergunta::after {
+  content: "+";
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.3em;
+  font-weight: 700;
+}
+
+/* Quando aria-expanded="true" (controlado pelo JS), trocamos o ícone para "-" */
+.accordion-pergunta[aria-expanded="true"]::after {
+  content: "−";
+}
+
+.accordion-pergunta:hover {
+  background-color: #cfe4f5;
+}
+
+.accordion-resposta {
+  padding: 1rem;
+  background-color: var(--branco);
+}
+
+/* ----------------------------------------------------------------
+   9. RODAPÉ
+------------------------------------------------------------------- */
+.rodape {
+  text-align: center;
+  padding: 1.5rem 1rem;
+  background-color: var(--azul-escuro);
+  color: var(--branco);
+  font-size: 0.9rem;
+}
+
+/* ================================================================
+   10. MODO ALTO CONTRASTE
+   Classe aplicada no <body> via JavaScript (botão "Alto Contraste").
+   Usamos fundo preto e texto amarelo/branco, uma combinação clássica
+   de altíssimo contraste, recomendada para baixa visão.
+   ================================================================ */
+.alto-contraste {
+  background-color: #000000 !important;
+  color: #ffff00 !important;
+}
+
+.alto-contraste .cabecalho,
+.alto-contraste .rodape {
+  background-color: #000000 !important;
+  border-bottom: 2px solid #ffff00;
+}
+
+.alto-contraste .cabecalho h1,
+.alto-contraste h1,
+.alto-contraste h2,
+.alto-contraste h3 {
+  color: #ffff00 !important;
+}
+
+.alto-contraste .menu-navegacao,
+.alto-contraste .botao-aba {
+  background-color: #000000 !important;
+  color: #ffff00 !important;
+  border-color: #ffff00 !important;
+}
+
+.alto-contraste .botao-aba.aba-selecionada {
+  background-color: #ffff00 !important;
+  color: #000000 !important;
+}
+
+.alto-contraste .btn-acessibilidade {
+  background-color: #000000 !important;
+  color: #ffff00 !important;
+  border-color: #ffff00 !important;
+}
+
+.alto-contraste .passo,
+.alto-contraste .accordion-item,
+.alto-contraste .accordion-resposta,
+.alto-contraste .accordion-pergunta,
+.alto-contraste .mensagem-sucesso {
+  background-color: #000000 !important;
+  color: #ffff00 !important;
+  border-color: #ffff00 !important;
+}
+
+.alto-contraste .campo-formulario input,
+.alto-contraste .campo-formulario select {
+  background-color: #000000 !important;
+  color: #ffff00 !important;
+  border-color: #ffff00 !important;
+}
+
+.alto-contraste .botao-enviar {
+  background-color: #ffff00 !important;
+  color: #000000 !important;
+  border-color: #ffff00 !important;
+}
+
+/* ================================================================
+   11. RESPONSIVIDADE (MOBILE FIRST)
+   Regras acima já funcionam bem em celulares na vertical.
+   Abaixo, ajustamos para telas maiores: celular na horizontal,
+   tablets e computadores.
+   ================================================================ */
+
+/* A partir de 480px (celulares na horizontal / telas um pouco maiores) */
+@media (min-width: 480px) {
+  .barra-acessibilidade {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .btn-acessibilidade {
+    flex: 1 1 auto;
+  }
+}
+
+/* A partir de 700px (tablets e celulares grandes na horizontal) */
+@media (min-width: 700px) {
+  .cabecalho h1 {
+    font-size: 1.8em;
+  }
+
+  .menu-navegacao {
+    flex-direction: row;
+  }
+
+  .botao-aba {
+    border-bottom: none;
+    border-right: 2px solid var(--branco);
+  }
+
+  .passo {
+    align-items: center;
+  }
+}
+
+/* A partir de 1024px (computadores) */
+@media (min-width: 1024px) {
+  .conteudo-principal {
+    padding-top: 2.5rem;
+  }
+}
