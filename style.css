@@ -20,6 +20,10 @@
   box-sizing: border-box;
 }
 
+body::-webkit-scrollbar {
+    display: none; /* esconder a barra de rolagem */
+}
+
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
@@ -27,7 +31,12 @@ body {
   line-height: 1.6;
   color: var(--text);
   background: var(--background);
+
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
+
 
 button,
 input,
@@ -51,7 +60,7 @@ textarea {
 .accessibility-content {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   min-height: 44px;
   gap: 16px;
 }
@@ -90,7 +99,14 @@ textarea {
 .brand {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 12px;
+}
+
+.brand-logo {
+  width: 105px;
+  max-height: 110px;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 
 .gov-label {
@@ -120,6 +136,7 @@ textarea {
 
 /* Layout principal */
 .page-layout {
+  flex: 1;
   padding: 32px 0 48px;
 }
 
@@ -370,66 +387,83 @@ details p {
 .main-footer {
   background: var(--gov-blue-dark);
   color: #ffffff;
-  padding: 24px 0;
+  padding: 20px 0;
 }
 
 .main-footer p {
-  margin: 4px 0;
+  margin: 6px 0;
 }
 
-/* Alto contraste aplicado via JavaScript */
-body.high-contrast {
-  --background: #000000;
-  --surface: #000000;
-  --text: #ffffff;
-  --muted: #ffffff;
-  --border: #ffffff;
-  --gov-blue: #ffff00;
-  --gov-blue-dark: #ffff00;
-  --gov-blue-light: #333333;
-  --shadow: none;
+/* Modo escuro aplicado via JavaScript */
+body.dark-mode {
+  --background: #121212;
+  --surface: #1e1e1e;
+  --text: #f5f5f5;
+  --muted: #d0d0d0;
+  --border: #3a3a3a;
+  --gov-blue: #6ea8fe;
+  --gov-blue-dark: #9ec5fe;
+  --gov-blue-light: #26364f;
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
 }
 
-body.high-contrast .main-header,
-body.high-contrast .card,
-body.high-contrast .hero-card,
-body.high-contrast details,
-body.high-contrast input,
-body.high-contrast select,
-body.high-contrast textarea {
-  background: #000000;
-  color: #ffffff;
+body.dark-mode .main-header,
+body.dark-mode .card,
+body.dark-mode .hero-card,
+body.dark-mode details,
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode textarea {
+  background: var(--surface);
+  color: var(--text);
 }
 
-body.high-contrast .gov-label,
-body.high-contrast .primary-button,
-body.high-contrast .tab-button.active {
-  background: #ffff00;
-  color: #000000;
-  border-color: #ffff00;
+body.dark-mode .accessibility-bar,
+body.dark-mode .main-footer {
+  background: #0b1f3a;
 }
 
-body.high-contrast .tab-button {
-  background: #000000;
-  color: #ffff00;
-  border-color: #ffff00;
+body.dark-mode .gov-label,
+body.dark-mode .primary-button,
+body.dark-mode .tab-button.active {
+  background: var(--gov-blue);
+  color: #08111f;
+  border-color: var(--gov-blue);
 }
 
-body.high-contrast .step,
-body.high-contrast .conditional-fields {
-  background: #111111;
-  border-color: #ffff00;
+body.dark-mode .tab-button {
+  background: var(--surface);
+  color: var(--gov-blue-dark);
+  border-color: var(--border);
+}
+
+body.dark-mode .step,
+body.dark-mode .conditional-fields {
+  background: #182336;
+  border-color: var(--gov-blue-light);
 }
 
 /* Responsividade */
 @media (max-width: 768px) {
   .brand {
-    align-items: flex-start;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .brand-logo {
+    width: 82px;
+    max-height: 58px;
   }
 
   .brand h1 {
-    font-size: calc(24px * var(--font-scale));
+    font-size: calc(19px * var(--font-scale));
+    line-height: 1.2;
+  }
+
+  .brand p {
+    font-size: calc(14px * var(--font-scale));
+    line-height: 1.3;
   }
 
   .hero-card {
@@ -454,5 +488,24 @@ body.high-contrast .conditional-fields {
     align-items: flex-start;
     flex-direction: column;
     padding: 10px 0;
+  }
+}
+
+@media (max-width: 420px) {
+  .brand-logo {
+    width: 68px;
+    max-height: 48px;
+  }
+
+  .brand {
+    gap: 8px;
+  }
+
+  .brand h1 {
+    font-size: calc(17px * var(--font-scale));
+  }
+
+  .brand p {
+    font-size: calc(13px * var(--font-scale));
   }
 }

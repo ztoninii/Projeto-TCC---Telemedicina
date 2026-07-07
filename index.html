@@ -5,33 +5,42 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Portal Unificado de Telemedicina de Jundiaí</title>
-
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <!-- Barra de acessibilidade no topo, preservando funções essenciais -->
   <div class="accessibility-bar" aria-label="Barra de acessibilidade">
     <div class="container accessibility-content">
-      <span>Acessibilidade</span>
+    
 
       <div class="accessibility-actions">
         <button type="button" id="increaseFont" aria-label="Aumentar tamanho da fonte">A+</button>
         <button type="button" id="decreaseFont" aria-label="Diminuir tamanho da fonte">A-</button>
-        <button type="button" id="toggleContrast" aria-label="Ativar ou desativar alto contraste">
-          Alto contraste
+        <button type="button" id="toggleTheme" aria-label="Ativar ou desativar modo escuro">
+          Modo escuro
         </button>
+        
       </div>
     </div>
   </div>
 
-  <!-- Cabeçalho institucional inspirado no padrão Gov.br -->
+  <!-- Cabeçalho -->
   <header class="main-header">
     <div class="container header-content">
       <div class="brand">
-        <span class="gov-label">gov.br</span>
+        <a href="https://jundiai.sp.gov.br/" target="_blank" rel="noopener noreferrer">
+        <img
+          class="brand-logo"
+          src="imagens/imagem prefeitura jun.webp"
+          alt="Prefeitura de Jundiaí"
+        />
+        </a>
+        
+        
         <div>
           <h1>Portal Unificado de Telemedicina de Jundiaí</h1>
           <p>Rede Pública, Convênios e Atendimento Particular em uma única plataforma</p>
+        
         </div>
       </div>
     </div>
@@ -44,6 +53,7 @@
       <button class="tab-button" data-tab="como-funciona" type="button">Como funciona</button>
       <button class="tab-button" data-tab="marcar-consulta" type="button">Marcar consulta</button>
       <button class="tab-button" data-tab="faq" type="button">FAQ</button>
+      <button class="tab-button" data-tab="sobre" type="button">Sobre</button>
     </nav>
 
     <!-- Aba Início -->
@@ -283,12 +293,48 @@
         </div>
       </div>
     </section>
+
+    <!-- Aba Sobre -->
+    <section id="sobre" class="tab-content">
+    <div class="card content-card">
+    <span class="section-kicker">Sobre o projeto</span>
+    <h2>Portal Unificado de Telemedicina de Jundiaí</h2>
+
+    <p>
+      Este projeto foi desenvolvido como parte de um Trabalho de Conclusão de Curso,
+      com o objetivo de propor uma solução digital para facilitar o acesso da população
+      de Jundiaí a atendimentos médicos por telemedicina.
+    </p>
+
+    <p>
+      A plataforma simula um portal GovTech, inspirado em padrões de interface do Gov.br,
+      reunindo em um único ambiente a Rede Pública SUS, convênios de saúde e atendimentos
+      particulares.
+    </p>
+
+    <p>
+      O sistema prioriza acessibilidade, clareza visual, organização das informações e
+      uma experiência simples para o cidadão, permitindo escolher o tipo de atendimento,
+      preencher os dados necessários e solicitar uma consulta online.
+    </p>
+
+    <h3>Objetivos do projeto</h3>
+
+    <ul>
+      <li>Modernizar o acesso aos serviços de saúde digital.</li>
+      <li>Integrar atendimento público e privado em uma mesma plataforma.</li>
+      <li>Reduzir barreiras de deslocamento para consultas iniciais.</li>
+      <li>Garantir que a população tenha acesso a informações claras e confiáveis.</li>
+      <li>Promover a inclusão digital e acessibilidade para todos os cidadãos.</li>
+
+    </ul>
+  </div>
+  </section>
   </main>
 
   <footer class="main-footer">
     <div class="container">
-      <p>Portal Unificado de Telemedicina de Jundiaí</p>
-      <p>Projeto acadêmico inspirado em boas práticas de GovTech, saúde digital e acessibilidade.</p>
+      <p>&copy; 2026 <strong>Yago Tonini</strong> - Todos os direitos reservados. </p>
     </div>
   </footer>
 

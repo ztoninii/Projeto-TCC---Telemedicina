@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const increaseFontButton = document.getElementById("increaseFont");
   const decreaseFontButton = document.getElementById("decreaseFont");
-  const toggleContrastButton = document.getElementById("toggleContrast");
+  const toggleThemeButton = document.getElementById("toggleTheme");
 
   const serviceTypeRadios = document.querySelectorAll("input[name='serviceType']");
   const publicFields = document.getElementById("publicFields");
@@ -73,9 +73,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Alterna a classe de alto contraste no body
-  toggleContrastButton.addEventListener("click", function () {
-    document.body.classList.toggle("high-contrast");
+  // Alterna a classe de modo escuro no body
+  toggleThemeButton.addEventListener("click", function () {
+  document.body.classList.toggle("dark-mode");
   });
 
   // Remove obrigatoriedade dos campos que estão escondidos
