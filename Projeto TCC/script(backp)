@@ -1,0 +1,184 @@
+/* ================================================================
+   PORTAL DE TELEMEDICINA SUS - JUNDIAÍ
+   Arquivo JavaScript
+   ----------------------------------------------------------------
+   Este arquivo controla 3 comportamentos principais do site:
+   1) Alternância entre as abas (Como Funciona / Marcar Consulta / Dúvidas)
+   2) Barra de Acessibilidade (tamanho da letra + alto contraste)
+   3) Simulação de envio do formulário de agendamento
+   4) Abertura/fechamento do Accordion (sanfona) de dúvidas
+
+   Cada função tem comentários explicando o "porquê", não só o "como",
+   para facilitar seu estudo e apresentação na banca.
+   ================================================================ */
+
+
+/* ----------------------------------------------------------------
+   1. ALTERNÂNCIA DE ABAS
+------------------------------------------------------------------- */
+
+/**
+ * Mostra a aba (seção) correspondente ao "idAba" e esconde as demais.
+ * Também atualiza qual botão do menu fica marcado como "selecionado".
+ *
+ * @param {string} idAba - o id da <section> que deve ser exibida
+ * @param {HTMLElement} botaoClicado - o botão do menu que o usuário tocou
+ */
+function mostrarAba(idAba, botaoClicado) {
+  // Pega TODAS as seções que têm a classe "aba"
+  const todasAsAbas = document.querySelectorAll('.aba');
+
+  // Para cada uma, removemos a classe "aba-ativa" (ou seja, escondemos todas)
+  todasAsAbas.forEach(function (secao) {
+    secao.classList.remove('aba-ativa');
+  });
+
+  // Agora mostramos apenas a aba que o usuário pediu
+  const abaEscolhida = document.getElementById(idAba);
+  if (abaEscolhida) {
+    abaEscolhida.classList.add('aba-ativa');
+
+    // Leva o foco e a rolagem da tela para o início do conteúdo,
+    // o que ajuda muito quem usa leitor de tela ou tem baixa visão.
+    abaEscolhida.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // Atualiza visualmente qual botão do menu está "ativo"
+  const todosOsBotoes = document.querySelectorAll('.botao-aba');
+  todosOsBotoes.forEach(function (botao) {
+    botao.classList.remove('aba-selecionada');
+  });
+  botaoClicado.classList.add('aba-selecionada');
+}
+
+
+/* ----------------------------------------------------------------
+   2. BARRA DE ACESSIBILIDADE
+------------------------------------------------------------------- */
+
+// Definimos limites para o tamanho da fonte, para o texto não ficar
+// gigante demais (quebrando o layout) nem pequeno demais (ilegível).
+const TAMANHO_MINIMO_FONTE = 16; // em pixels
+const TAMANHO_MAXIMO_FONTE = 32; // em pixels
+const PASSO_FONTE = 2;           // quanto aumenta/diminui a cada clique
+
+/**
+ * Lê o tamanho de fonte ATUAL do body (em pixels) e devolve um número.
+ * Usamos getComputedStyle porque o valor pode ter vindo do CSS (rem/px).
+ */
+function obterTamanhoFonteAtual() {
+  const estiloAtual = window.getComputedStyle(document.body).fontSize;
+  return parseFloat(estiloAtual); // remove o "px" e converte para número
+}
+
+/**
+ * Aumenta o tamanho da letra do site inteiro (aplicado no <body>,
+ * então todos os elementos filhos que usam "em" também crescem).
+ */
+function aumentarLetra() {
+  const tamanhoAtual = obterTamanhoFonteAtual();
+  const novoTamanho = Math.min(tamanhoAtual + PASSO_FONTE, TAMANHO_MAXIMO_FONTE);
+  document.body.style.fontSize = novoTamanho + 'px';
+}
+
+/**
+ * Diminui o tamanho da letra do site inteiro, respeitando o mínimo
+ * definido, para o texto continuar legível para pessoas idosas.
+ */
+function diminuirLetra() {
+  const tamanhoAtual = obterTamanhoFonteAtual();
+  const novoTamanho = Math.max(tamanhoAtual - PASSO_FONTE, TAMANHO_MINIMO_FONTE);
+  document.body.style.fontSize = novoTamanho + 'px';
+}
+
+/**
+ * Liga/desliga o modo de Alto Contraste, adicionando ou removendo
+ * a classe ".alto-contraste" no <body>. Todo o estilo desse modo
+ * já está pronto no arquivo style.css.
+ */
+function alternarAltoContraste() {
+  document.body.classList.toggle('alto-contraste');
+}
+
+
+/* ----------------------------------------------------------------
+   3. FORMULÁRIO DE AGENDAMENTO (SIMULAÇÃO DE ENVIO)
+------------------------------------------------------------------- */
+
+/**
+ * Intercepta o envio do formulário de agendamento para, ao invés de
+ * recarregar a página (comportamento padrão do HTML), mostrar uma
+ * mensagem amigável de sucesso na própria tela.
+ *
+ * Em um sistema real, aqui entraria uma chamada para o servidor
+ * (por exemplo, usando fetch()) para de fato salvar o agendamento.
+ */
+function configurarEnvioFormulario() {
+  const formulario = document.getElementById('form-agendamento');
+  const mensagemSucesso = document.getElementById('mensagem-sucesso');
+
+  formulario.addEventListener('submit', function (evento) {
+    // Impede o comportamento padrão do navegador (que recarregaria a página)
+    evento.preventDefault();
+
+    // Verificação simples: o próprio HTML já exige os campos "required",
+    // mas checamos a validade aqui também antes de "enviar".
+    if (!formulario.checkValidity()) {
+      formulario.reportValidity(); // mostra as mensagens de erro nativas do navegador
+      return;
+    }
+
+    // Simula um pequeno tempo de "processamento", como se estivesse
+    // enviando os dados para o servidor da Secretaria de Saúde.
+    mensagemSucesso.hidden = false;
+    mensagemSucesso.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    // Limpa o formulário para o caso do usuário querer marcar outra consulta
+    formulario.reset();
+  });
+}
+
+
+/* ----------------------------------------------------------------
+   4. ACCORDION (SANFONA) DE DÚVIDAS
+------------------------------------------------------------------- */
+
+/**
+ * Abre ou fecha a resposta de uma pergunta do Accordion.
+ * Também atualiza o atributo "aria-expanded" para leitores de tela
+ * saberem se aquela resposta está visível ou não.
+ *
+ * @param {HTMLElement} botaoPergunta - o <button> da pergunta clicada
+ */
+function alternarAccordion(botaoPergunta) {
+  // O botão tem um atributo "aria-controls" que aponta para o id da resposta
+  const idResposta = botaoPergunta.getAttribute('aria-controls');
+  const painelResposta = document.getElementById(idResposta);
+
+  // Verifica se já está aberto (aria-expanded="true")
+  const estaAberto = botaoPergunta.getAttribute('aria-expanded') === 'true';
+
+  // Inverte o estado: se estava aberto, fecha; se estava fechado, abre.
+  botaoPergunta.setAttribute('aria-expanded', String(!estaAberto));
+  painelResposta.hidden = estaAberto; // hidden = true significa "escondido"
+}
+
+
+/* ----------------------------------------------------------------
+   5. INICIALIZAÇÃO
+   Aguardamos o carregamento completo do HTML antes de "ligar" os
+   botões da barra de acessibilidade e o formulário.
+------------------------------------------------------------------- */
+document.addEventListener('DOMContentLoaded', function () {
+  // Conecta os botões da barra de acessibilidade às funções correspondentes
+  document.getElementById('btn-aumentar-letra').addEventListener('click', aumentarLetra);
+  document.getElementById('btn-diminuir-letra').addEventListener('click', diminuirLetra);
+  document.getElementById('btn-alto-contraste').addEventListener('click', alternarAltoContraste);
+
+  // Ativa a simulação de envio do formulário
+  configurarEnvioFormulario();
+
+  // Observação: a alternância de abas (mostrarAba) e do accordion
+  // (alternarAccordion) já são chamadas diretamente pelo atributo
+  // "onclick" no HTML, então não precisam ser configuradas aqui.
+});
