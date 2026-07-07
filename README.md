@@ -11,7 +11,7 @@ Este repositório contém o código-fonte do produto prático desenvolvido para 
 O portal adota o padrão visual e de usabilidade governamental (inspirado no Gov.br), garantindo uma interface confiável, limpa e altamente intuitiva.
 
 ##  Objetivo Acadêmico
-O foco principal deste TCC é combater a infoexclusão e promover o **letramento digital em saúde**, especialmente para a população idosa. 
+O foco principal deste projeto é combater a infoexclusão e promover o **letramento digital em saúde**, especialmente para a população idosa. 
 
 A pandemia de COVID-19 acelerou a digitalização da medicina, mas criou uma barreira tecnológica para os pacientes mais vulneráveis. Este portal atua como uma ferramenta de **humanização digital**, oferecendo:
 1. **Educação:** Um passo a passo claro, em linguagem simples, sobre como se preparar para uma teleconsulta.
