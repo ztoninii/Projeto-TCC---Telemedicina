@@ -34,11 +34,8 @@ Para garantir um código leve, semântico e de fácil manutenção, o projeto fo
 
 ##  Como visualizar o projeto
 
-### Opção 1: Via GitHub Pages (Recomendado)
+### Via GitHub Pages 
 Você pode testar o projeto online clicando no link abaixo:
-🔗 **[Acessar o Portal de Telemedicina - Jundiaí](adicionar ainda)** 
+**[Acessar o Portal de Telemedicina - Jundiaí](adicionar ainda)** 
 
-### Opção 2: Rodando Localmente
-1. Faça o clone deste repositório:
-   ```bash
-   git clone [https://github.com/ztoninii/Projeto-TCC---Telemedicia.git](https://github.com/ztoninii/Projeto-TCC---Telemedicia.git)
+
