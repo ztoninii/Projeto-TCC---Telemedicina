@@ -8,24 +8,34 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Barra de acessibilidade no topo, preservando funções essenciais -->
+    <!-- Barra de acessibilidade no topo, preservando funções essenciais -->
   <div class="accessibility-bar" aria-label="Barra de acessibilidade">
     <div class="container accessibility-content">
-    
-
       <div class="accessibility-actions">
+        <label class="language-control" for="languageSelect">
+          <span class="sr-only">Idioma</span>
+          <select id="languageSelect" aria-label="Selecionar idioma">
+            <option value="pt">PT</option>
+            <option value="en">EN</option>
+          </select>
+        </label>
+
+        <button class="icon-button" type="button" id="toggleTheme" aria-label="Ativar modo escuro" title="Ativar modo escuro">
+          <span id="themeIcon" aria-hidden="true">🌙</span>
+        </button>
+
+        <button class="icon-button" type="button" id="toggleContrast" aria-label="Ativar alto contraste" title="Ativar alto contraste">
+          <img src="imagens/simbolo-do-circulo-de-contraste.png" alt="" aria-hidden="true" />
+        </button>
+
         <button type="button" id="increaseFont" aria-label="Aumentar tamanho da fonte">A+</button>
         <button type="button" id="decreaseFont" aria-label="Diminuir tamanho da fonte">A-</button>
-        <button type="button" id="toggleTheme" aria-label="Ativar ou desativar modo escuro">
-          Modo escuro
-        </button>
-        
       </div>
     </div>
   </div>
 
   <!-- Cabeçalho -->
-  <header class="main-header">
+<header class="main-header">
     <div class="container header-content">
       <div class="brand">
         <a href="https://jundiai.sp.gov.br/" target="_blank" rel="noopener noreferrer">
@@ -48,7 +58,13 @@
 
   <main class="container page-layout">
     <!-- Navegação por abas -->
-    <nav class="tabs" aria-label="Navegação principal">
+    <button class="menu-toggle" id="menuToggle" type="button" aria-label="Abrir menu de navegação" aria-controls="mainNavigation" aria-expanded="false">
+      <span class="menu-toggle-line" aria-hidden="true"></span>
+      <span class="menu-toggle-line" aria-hidden="true"></span>
+      <span class="menu-toggle-line" aria-hidden="true"></span>
+    </button>
+
+    <nav class="tabs" id="mainNavigation" aria-label="Navegação principal">
       <button class="tab-button active" data-tab="inicio" type="button">Início</button>
       <button class="tab-button" data-tab="como-funciona" type="button">Como funciona</button>
       <button class="tab-button" data-tab="marcar-consulta" type="button">Marcar consulta</button>
@@ -374,7 +390,19 @@
               Sim, o nosso sistema foi desenhado a pensar em todos. Utilizamos letras grandes, cores fáceis de ler e a nossa página está preparada para funcionar com leitores de ecrã (para pessoas cegas ou com baixa visão). O nosso objetivo é que consiga agendar a sua consulta sem barreiras.
             </p>
           </details>
+
+        <div class="faq-contact-card">
+          <div>
+            <h3>Ainda ficou com alguma dúvida?</h3>
+            <p>Entre em contato com a equipe responsável para receber ajuda sobre o uso do portal e o atendimento por telemedicina.</p>
+          </div>
+          
+          <a class="whatsapp-button" href="https://wa.me/5500000000000" target="_blank" rel="noopener noreferrer" aria-label="Falar no WhatsApp em uma nova aba">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="" aria-hidden="true" />
+            <span>Falar no WhatsApp</span>
+          </a>
         </div>
+      </div>
       </div>
     </section>
 
