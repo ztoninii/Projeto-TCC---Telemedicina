@@ -79,6 +79,10 @@ textarea {
   flex-wrap: wrap;
 }
 
+.language-selector{
+  margin-top: 7.5px;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -115,6 +119,8 @@ textarea {
   color: #08111f;
 }
 
+
+
 .icon-button {
   width: 40px;
   padding: 0;
@@ -129,6 +135,21 @@ textarea {
   height: 22px;
   display: block;
   transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+#themeIcon {
+  object-fit: contain;
+  filter: invert(1);
+}
+
+#toggleTheme:hover #themeIcon,
+#toggleTheme:focus-visible #themeIcon {
+  filter: none;
+  transform: rotate(12deg) scale(1.08);
+}
+
+body.high-contrast #themeIcon {
+  filter: none;
 }
 
 .icon-button span {
@@ -160,6 +181,14 @@ textarea {
   border-bottom: 1px solid var(--border);
 }
 
+.navigation-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 0 16px;
+}
+
 .header-content {
   padding: 28px 0;
 }
@@ -172,12 +201,13 @@ textarea {
 }
 
 .brand-logo {
+  display: block;
   width: 105px;
-  max-height: 110px;
+  max-width: 100%;
+  height: auto;
   object-fit: contain;
   flex-shrink: 0;
 }
-
 .gov-label {
   display: inline-flex;
   align-items: center;
@@ -600,16 +630,100 @@ details p {
     margin-right: 5px;
   }
 
-  /* Rodapé */
-.main-footer {
-  background: var(--gov-blue-dark);
+/* Rodapé */
+.footer {
+  background: #0c326f;
   color: #ffffff;
-  padding: 20px 0;
+  border-top: 4px solid #2d9cdb;
+  padding: 32px 20px 20px;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-.main-footer p {
-  margin: 6px 0;
+.footer-container {
+  width: min(100%, 1100px);
+  margin-inline: auto;
 }
+
+.footer-address {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0 0 24px;
+  color: #ffffff;
+  font-size: calc(14px * var(--font-scale));
+  font-style: normal;
+  line-height: 1.6;
+}
+
+.footer-address strong {
+  font-size: calc(17px * var(--font-scale));
+}
+
+.footer-social {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.footer-social a {
+  display: inline-flex;
+  width: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  background: #ffffff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.footer-social img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.footer-social a:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+}
+
+.footer-social a:focus-visible,
+.footer-bottom a:focus-visible {
+  outline: 3px solid #7dd3fc;
+  outline-offset: 4px;
+}
+
+.footer hr {
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.35);
+  margin: 0 0 18px;
+}
+
+.footer-bottom {
+  margin: 0;
+  color: #dbe8fb;
+  font-size: calc(13px * var(--font-scale));
+  line-height: 1.7;
+}
+
+.footer-bottom a {
+  color: #ffffff;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 4px;
+}
+
+.footer-bottom a:hover {
+  text-decoration-color: currentColor;
+}
+
+
 
 /* Modo escuro aplicado via JavaScript */
 body.dark-mode {
@@ -638,8 +752,17 @@ body.dark-mode textarea {
 }
 
 body.dark-mode .accessibility-bar,
-body.dark-mode .main-footer {
-  background: #0b1f3a;
+body.dark-mode .footer {
+  background: #07182f;
+}
+
+body.dark-mode .footer {
+  color: #f5f5f5;
+  border-top-color: #6ea8fe;
+}
+
+body.dark-mode .footer-bottom {
+  color: #d0d0d0;
 }
 
 body.dark-mode .gov-label,
@@ -703,10 +826,39 @@ body.high-contrast .faq-contact-card {
 }
 
 body.high-contrast .accessibility-bar,
-body.high-contrast .main-footer,
+body.high-contrast .footer,
 body.high-contrast .tabs {
   background: #000000;
   border-color: #ffffff;
+}
+
+body.high-contrast .footer {
+  background: #000000;
+  color: #ffffff;
+  border-top: 4px solid #ffff00;
+}
+
+body.high-contrast .footer-address,
+body.high-contrast .footer-bottom,
+body.high-contrast .footer-bottom a {
+  color: #ffffff;
+}
+
+body.high-contrast .footer hr {
+  border-top-color: #ffffff;
+}
+
+body.high-contrast .footer-social a {
+  background: #ffff00;
+  border: 2px solid #ffff00;
+  box-shadow: none;
+}
+
+body.high-contrast .footer-social a:hover,
+body.high-contrast .footer-social a:focus-visible {
+  background: #00ffff;
+  border-color: #00ffff;
+  outline: 3px solid #ffffff;
 }
 
 body.high-contrast a,
@@ -753,8 +905,7 @@ body.high-contrast #toggleContrast img {
   }
 
   .brand-logo {
-    width: 82px;
-    max-height: 58px;
+  width: 82px;
   }
 
   .brand h1 {
@@ -777,15 +928,14 @@ body.high-contrast #toggleContrast img {
   }
 
   .menu-toggle {
-    display: inline-flex;
+    display: flex;
+    margin:0 0 14px auto;
     width: 48px;
     height: 48px;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     gap: 5px;
-    margin-bottom: 14px;
-    margin-left: auto;
     border: 1px solid var(--gov-blue-light);
     border-radius: 8px;
     background: var(--surface);
@@ -859,17 +1009,34 @@ body.high-contrast #toggleContrast img {
   }
 
   .accessibility-content {
-    align-items: flex-start;
-    flex-direction: column;
-    padding: 10px 0;
+  align-items: flex-end;
+  flex-direction: column;
+  padding: 10px 0;
+}
+
+.accessibility-actions {
+  width: 100%;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+  .footer {
+  padding: 28px 16px 18px;
+}
+
+.footer-address span,
+.footer-bottom {
+  overflow-wrap: anywhere;
+}
+
+.footer-bottom {
+  max-width: 620px;
+  margin-inline: auto;
   }
 }
 
 @media (max-width: 420px) {
-  .accessibility-actions {
-    width: 100%;
-  }
-
+  
   .language-control,
   .language-control select {
     flex: 1 1 72px;
@@ -898,8 +1065,7 @@ body.high-contrast #toggleContrast img {
   }
 
   .brand-logo {
-    width: 68px;
-    max-height: 48px;
+  width: 68px;
   }
 
   .brand {
@@ -912,5 +1078,26 @@ body.high-contrast #toggleContrast img {
 
   .brand p {
     font-size: calc(13px * var(--font-scale));
+  }
+
+  .footer {
+  padding-inline: 12px;
+}
+
+.footer-address {
+  margin-bottom: 20px;
+}
+
+.footer-social {
+  margin-bottom: 22px;
+}
+
+.footer-social a {
+  width: 44px;
+  height: 44px;
+}
+
+.footer-bottom {
+  font-size: calc(12px * var(--font-scale));
   }
 }

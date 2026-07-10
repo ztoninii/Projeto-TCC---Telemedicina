@@ -12,20 +12,29 @@
   <div class="accessibility-bar" aria-label="Barra de acessibilidade">
     <div class="container accessibility-content">
       <div class="accessibility-actions">
-        <label class="language-control" for="languageSelect">
-          <span class="sr-only">Idioma</span>
-          <select id="languageSelect" aria-label="Selecionar idioma">
-            <option value="pt">PT</option>
-            <option value="en">EN</option>
-          </select>
-        </label>
+        <div class="language-selector">
+          <label class="language-control" for="languageSelect">
+            <span class="sr-only">Idioma</span>
+            <select id="languageSelect" aria-label="Selecionar idioma">
+              <option value="pt">PT</option>
+              <option value="en">EN</option>
+            </select>
+          </label>
+        </div>
 
-        <button class="icon-button" type="button" id="toggleTheme" aria-label="Ativar modo escuro" title="Ativar modo escuro">
-          <span id="themeIcon" aria-hidden="true">🌙</span>
+        <button class="icon-button" type="button" id="toggleTheme"
+        aria-label="Ativar modo escuro"
+        title="Ativar modo escuro">
+          <img
+            id="themeIcon"
+            src="imagens/lua.png"
+            alt="Ícone do modo escuro"
+            aria-hidden="true"
+          />
         </button>
 
         <button class="icon-button" type="button" id="toggleContrast" aria-label="Ativar alto contraste" title="Ativar alto contraste">
-          <img src="imagens/simbolo-do-circulo-de-contraste.png" alt="" aria-hidden="true" />
+          <img src="imagens/simbolo-do-circulo-de-contraste.png" alt="Ícone do alto contraste" aria-hidden="true" />
         </button>
 
         <button type="button" id="increaseFont" aria-label="Aumentar tamanho da fonte">A+</button>
@@ -41,8 +50,8 @@
         <a href="https://jundiai.sp.gov.br/" target="_blank" rel="noopener noreferrer">
         <img
           class="brand-logo"
-          src="imagens/imagem prefeitura jun.webp"
-          alt="Prefeitura de Jundiaí"
+          src="imagens/imagem pref sem fundo.png"
+          alt="Logotipo da Prefeitura de Jundiaí"
         />
         </a>
         
@@ -64,13 +73,16 @@
       <span class="menu-toggle-line" aria-hidden="true"></span>
     </button>
 
-    <nav class="tabs" id="mainNavigation" aria-label="Navegação principal">
-      <button class="tab-button active" data-tab="inicio" type="button">Início</button>
-      <button class="tab-button" data-tab="como-funciona" type="button">Como funciona</button>
-      <button class="tab-button" data-tab="marcar-consulta" type="button">Marcar consulta</button>
-      <button class="tab-button" data-tab="faq" type="button">FAQ</button>
-      <button class="tab-button" data-tab="sobre" type="button">Sobre</button>
-    </nav>
+    <div class="navigation-container">
+      <nav class="tabs" id="mainNavigation" aria-label="Navegação principal">
+        <button class="tab-button active" data-tab="inicio" type="button">Início</button>
+        <button class="tab-button" data-tab="como-funciona" type="button">Como funciona</button>
+        <button class="tab-button" data-tab="marcar-consulta" type="button">Marcar consulta</button>
+        <button class="tab-button" data-tab="faq" type="button">FAQ</button>
+        <button class="tab-button" data-tab="sobre" type="button">Sobre</button>
+      </nav>
+    </div>
+
 
     <!-- Aba Início -->
     <section id="inicio" class="tab-content active">
@@ -398,7 +410,7 @@
           </div>
           
           <a class="whatsapp-button" href="https://wa.me/5500000000000" target="_blank" rel="noopener noreferrer" aria-label="Falar no WhatsApp em uma nova aba">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="" aria-hidden="true" />
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="Ícone do WhatsApp" aria-hidden="true" />
             <span>Falar no WhatsApp</span>
           </a>
         </div>
@@ -459,11 +471,44 @@
   </section>
   </main>
 
-  <footer class="main-footer">
-    <div class="container">
-      <p>&copy; 2026 <strong>Yago Tonini</strong> - Todos os direitos reservados. </p>
-    </div>
-  </footer>
+<footer class="footer">
+  <div class="footer-container">
+    <address class="footer-address">
+      <span><strong>Prefeitura de Jundiaí -</strong> Avenida da Liberdade, s/nº - Jardim Botânico - CEP 13214-900</span>
+    </address>
+
+    <nav class="footer-social" aria-label="Redes sociais da Prefeitura">
+      <a href="https://www.facebook.com/prefeituradejundiai" target="_blank" rel="noopener noreferrer"
+         aria-label="Facebook da Prefeitura de Jundiaí">
+        <img src="imagens/facebook.png" alt="Facebook da Prefeitura de Jundiaí" aria-hidden="true">
+      </a>
+
+      <a href="https://www.instagram.com/cidadedejundiai" target="_blank" rel="noopener noreferrer"
+         aria-label="Instagram da Prefeitura de Jundiaí">
+        <img src="imagens/instagram.png" alt="Instagram da Prefeitura de Jundiaí" aria-hidden="true">
+      </a>
+
+        <a href="https://x.com/CidadeDeJundiai" target="_blank" rel="noopener noreferrer"
+         aria-label="X/Twitter da Prefeitura de Jundiaí">
+        <img src="imagens/x.png" alt="X/Twitter da Prefeitura de Jundiaí" aria-hidden="true">
+      </a>
+    
+
+      <a href="https://www.youtube.com/cidadedejundiai" target="_blank" rel="noopener noreferrer"
+         aria-label="YouTube da Prefeitura de Jundiaí">
+        <img src="imagens/youtube.png" alt="YouTube da Prefeitura de Jundiaí" aria-hidden="true">
+      </a>
+    </nav>
+
+    <hr>
+
+    <p class="footer-bottom">
+      Prefeitura de Jundiaí |
+      Desenvolvido por <strong><a href="https://linktr.ee/yagotonini2" target="_blank" rel="noopener noreferrer">Yago Tonini</a></strong> |
+      Política de Privacidade
+    </p>
+  </div>
+</footer>
 
   <script src="script.js"></script>
 </body>
