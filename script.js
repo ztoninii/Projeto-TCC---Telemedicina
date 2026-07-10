@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const toggleThemeButton = document.getElementById("toggleTheme");
   const themeIcon = document.getElementById("themeIcon");
   const toggleContrastButton = document.getElementById("toggleContrast");
+  const brandLogo = document.querySelector(".brand-logo");
 
   const serviceTypeRadios = document.querySelectorAll("input[name='serviceType']");
   const publicFields = document.getElementById("publicFields");
@@ -32,6 +33,11 @@ document.addEventListener("DOMContentLoaded", function () {
     language: "telemedicina-language",
     theme: "telemedicina-theme",
     contrast: "telemedicina-high-contrast"
+  };
+  
+  const LOGO_SOURCES = {
+  light: "imagens/imagem pref sem fundo.png",
+  white: "imagens/imagem pref letras brancas sem fundo.png"
   };
 
   // Dicionário central de traduções. Para novos idiomas, adicione outro objeto em translations.
@@ -192,9 +198,10 @@ document.addEventListener("DOMContentLoaded", function () {
         "Colégio Domus Sapiens": "Colégio Domus Sapiens",
         "Professor Orientador: Felipe Schadt": "Advisor: Felipe Schadt",
         "Alunos integrantes:": "Student members:",
-        "© 2026": "© 2026",
-        "Yago Tonini": "Yago Tonini",
-        "- Todos os direitos reservados.": "- All rights reserved."
+        "Desenvolvido por": "Developed by",
+        "Política de Privacidade": "Privacy Policy",
+        
+       
       }
     }
   };
@@ -274,13 +281,30 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function updateThemeButton() {
-    const dictionary = translations[currentLanguage];
-    const isDark = document.body.classList.contains("dark-mode");
-    const label = isDark ? dictionary.aria.themeLight : dictionary.aria.themeDark;
+  const dictionary = translations[currentLanguage];
+  const isDark = document.body.classList.contains("dark-mode");
+  const label = isDark
+    ? dictionary.aria.themeLight
+    : dictionary.aria.themeDark;
 
-    themeIcon.textContent = isDark ? "☀️" : "🌙";
-    toggleThemeButton.setAttribute("aria-label", label);
-    toggleThemeButton.setAttribute("title", label);
+  themeIcon.src = isDark
+    ? "imagens/sol.png"
+    : "imagens/lua.png";
+
+  toggleThemeButton.setAttribute("aria-label", label);
+  toggleThemeButton.setAttribute("title", label);
+  }
+
+  function updateBrandLogo() {
+  const isDarkMode = document.body.classList.contains("dark-mode");
+  const isHighContrast = document.body.classList.contains("high-contrast");
+
+  // O alto contraste e o modo escuro usam a versão com letras brancas.
+  const shouldUseWhiteLogo = isHighContrast || isDarkMode;
+
+  brandLogo.src = shouldUseWhiteLogo
+    ? LOGO_SOURCES.white
+    : LOGO_SOURCES.light;
   }
 
   function updateContrastButton() {
@@ -293,13 +317,16 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function applyStoredPreferences() {
-    const savedTheme = localStorage.getItem(STORAGE_KEYS.theme);
-    const savedContrast = localStorage.getItem(STORAGE_KEYS.contrast);
+  const savedTheme = localStorage.getItem(STORAGE_KEYS.theme);
+  const savedContrast = localStorage.getItem(STORAGE_KEYS.contrast);
 
-    document.body.classList.toggle("dark-mode", savedTheme === "dark");
-    document.body.classList.toggle("high-contrast", savedContrast === "true");
-    languageSelect.value = translations[currentLanguage] ? currentLanguage : "pt";
-    applyTranslations(languageSelect.value);
+  document.body.classList.toggle("dark-mode", savedTheme === "dark");
+  document.body.classList.toggle("high-contrast", savedContrast === "true");
+
+  updateBrandLogo();
+
+  languageSelect.value = translations[currentLanguage] ? currentLanguage : "pt";
+  applyTranslations(languageSelect.value);
   }
 
   function activateTab(tabId) {
@@ -370,17 +397,34 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   toggleThemeButton.addEventListener("click", function () {
-    const shouldUseDarkMode = !document.body.classList.contains("dark-mode");
-    document.body.classList.toggle("dark-mode", shouldUseDarkMode);
-    localStorage.setItem(STORAGE_KEYS.theme, shouldUseDarkMode ? "dark" : "light");
-    updateThemeButton();
+  const shouldUseDarkMode = !document.body.classList.contains("dark-mode");
+
+  document.body.classList.toggle("dark-mode", shouldUseDarkMode);
+  localStorage.setItem(
+    STORAGE_KEYS.theme,
+    shouldUseDarkMode ? "dark" : "light"
+  );
+
+  updateThemeButton();
+  updateBrandLogo();
   });
 
   toggleContrastButton.addEventListener("click", function () {
-    const shouldUseHighContrast = !document.body.classList.contains("high-contrast");
-    document.body.classList.toggle("high-contrast", shouldUseHighContrast);
-    localStorage.setItem(STORAGE_KEYS.contrast, String(shouldUseHighContrast));
-    updateContrastButton();
+  const shouldUseHighContrast =
+    !document.body.classList.contains("high-contrast");
+
+  document.body.classList.toggle(
+    "high-contrast",
+    shouldUseHighContrast
+  );
+
+  localStorage.setItem(
+    STORAGE_KEYS.contrast,
+    String(shouldUseHighContrast)
+  );
+
+  updateContrastButton();
+  updateBrandLogo();
   });
 
   function clearDynamicRequirements() {
