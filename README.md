@@ -36,6 +36,6 @@ Para garantir um código leve, semântico e de fácil manutenção, o projeto fo
 
 ### Via GitHub Pages 
 Você pode testar o projeto online clicando no link abaixo:
-**[Acessar o Portal de Telemedicina - Jundiaí](adicionar ainda)** 
+**[Acessar o Portal de Telemedicina - Jundiaí]((https://ztoninii.github.io/Projeto-TCC---Telemedicina/))** 
 
 
